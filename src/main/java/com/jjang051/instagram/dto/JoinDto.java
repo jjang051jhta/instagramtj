@@ -23,8 +23,9 @@ public class JoinDto {
   @Size(min=5,max=20,message = "5글자이상 20글자이하로 작성해주세요.")
   private String userId;
 
-  @Pattern(regexp = "^(?=.*[0-9])(?=.*[!@#$%^&*(),.?\\\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\\\":{}|<>]{8,20}$",
-  message = "비밀번호는 8자 이상, 20자 이하이며, 숫자와 특수문자를 포함해야 합니다.")
+  // @Pattern(regexp = "^(?=.*[0-9])(?=.*[!@#$%^&*(),.?\\\":{}|<>])[A-Za-z0-9!@#$%^&*(),.?\\\":{}|<>]{8,20}$",
+  // message = "비밀번호는 8자 이상, 20자 이하이며, 숫자와 특수문자를 포함해야 합니다.")
+  @NotBlank(message = "필수입력사항입니다.")
   private String password;
 
   @Email(message = "이메일 형식에 맞게 적어주세요")

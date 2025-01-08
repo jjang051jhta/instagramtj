@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jjang051.instagram.dto.JoinDto;
+import com.jjang051.instagram.entity.Member;
+import com.jjang051.instagram.service.IMemberService;
+import com.jjang051.instagram.service.MemberService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +22,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/member")
 @Slf4j
+@RequiredArgsConstructor
 public class MemberController {
 
   private String prefix="/member";
+
+  private final IMemberService memberService;
 
   @GetMapping("/join")
   public String join(Model model) {
@@ -33,7 +40,16 @@ public class MemberController {
       if(bindingResult.hasErrors()) {
         return prefix+"/join";
       }
-      return "redirect:/member/login";
+      Member savedMember = memberService.join(joinDto);
+      if(savedMember!=null) {
+        return "redirect:/member/login";
+      }
+      return prefix+"/join";
+  }
+
+  @GetMapping("/login")
+  public String login() {
+      return prefix+"/login";
   }
 }
 
