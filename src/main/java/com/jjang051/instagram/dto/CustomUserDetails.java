@@ -1,6 +1,7 @@
 package com.jjang051.instagram.dto;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -21,8 +22,9 @@ public class CustomUserDetails implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+    Collection<GrantedAuthority> collection = new ArrayList<>();
+    collection.add((GrantedAuthority)()-> String.valueOf(loggedMember.getRole()));
+    return collection;
   }
 
   @Override

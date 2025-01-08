@@ -21,7 +21,7 @@ public class SecurityConfig {
         (auth)->auth
           .loginPage("/member/login")
           .usernameParameter("userId")
-          .passwordParameter("password")
+          //.passwordParameter("password")
           .loginProcessingUrl("/member/login")
           .defaultSuccessUrl("/", true)
           .permitAll()
