@@ -4,10 +4,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 
 @Configuration
 public class SecurityConfig {
 
+  
+  @Bean
+  public AuthenticationFailureHandler failureHandler(){
+      return new ForwardAuthenticationFailureHandler("/member/login");
+  }
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.authorizeHttpRequests(
@@ -22,8 +29,9 @@ public class SecurityConfig {
           .loginPage("/member/login")
           .usernameParameter("userId")
           //.passwordParameter("password")
-          .loginProcessingUrl("/member/login")
+          .loginProcessingUrl("/member/login-process")
           .defaultSuccessUrl("/", true)
+          .failureHandler(failureHandler())
           .permitAll()
         )
       .csrf((csrf)->csrf.disable());

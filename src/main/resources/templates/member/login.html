@@ -6,8 +6,9 @@
     <main class="container">
       <h2 class="my-5">LOGIN</h2>
       <form
-        action="/member/loginffff"
+        action="/member/login"
         th:action="@{/member/login}"
+        th:object="${loginDto}"
         method="post"
       >
         <div>
@@ -20,7 +21,9 @@
               placeholder="user id"
               name="userId"
             />
+            <p th:errors="*{userId}">회원가입 필드 에러</p>
           </div>
+          <p></p>
           <div class="mb-3">
             <label for="password" class="form-label fw-bold">PASSWORD</label>
             <input
@@ -30,6 +33,13 @@
               placeholder="password"
               name="password"
             />
+            <p th:errors="*{password}">회원가입 필드 에러</p>
+          </div>
+
+          <div th:if="${#fields.hasGlobalErrors()}">
+            <!-- <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"> -->
+            인증 예외 메시지
+            <!-- </p> -->
           </div>
           <div><button class="btn btn-primary">LOGIN</button></div>
         </div>

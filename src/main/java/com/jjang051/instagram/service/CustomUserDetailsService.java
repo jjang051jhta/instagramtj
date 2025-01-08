@@ -25,10 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
   public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
     Optional<Member> optionalMember = memberRepository.findByUserId(userId);
     if(optionalMember.isPresent()) {
-      log.info("login success");
       return new CustomUserDetails(optionalMember.get());
     }
     throw new UsernameNotFoundException("아이디 비번 확인해주세요.");
   } 
-  
 }
