@@ -4,3 +4,7 @@
   color: #f00;
   font-weight: bold;
 }
+
+h1 img {
+  height: 50px;
+}
