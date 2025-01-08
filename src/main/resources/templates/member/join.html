@@ -4,11 +4,16 @@
   <body>
     <header th:replace="~{fragments/header}"></header>
     <main class="container">
-      <h2>SIGN UP</h2>
-      <form action="">
+      <h2 class="my-5">SIGN UP</h2>
+      <form
+        action="/member/join"
+        thth:action="@{/member/join}"
+        method="post"
+        th:object="${joinDto}"
+      >
         <div>
           <div class="mb-3">
-            <label for="user-id" class="form-label">USER ID</label>
+            <label for="user-id" class="form-label fw-bold">USER ID</label>
             <input
               type="text"
               class="form-control"
@@ -16,9 +21,12 @@
               placeholder="user id"
               name="userId"
             />
+            <p class="error" th:errors="*{userId}">
+              여기에 오류메세지 적어주세요.
+            </p>
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">PASSWORD</label>
+            <label for="password" class="form-label fw-bold">PASSWORD</label>
             <input
               type="password"
               class="form-control"
@@ -26,9 +34,12 @@
               placeholder="password"
               name="password"
             />
+            <p class="error" th:errors="*{password}">
+              여기에 오류메세지 적어주세요.
+            </p>
           </div>
           <div class="mb-3">
-            <label for="user-email" class="form-label">EMAIL</label>
+            <label for="user-email" class="form-label fw-bold">EMAIL</label>
             <input
               type="text"
               class="form-control"
@@ -36,9 +47,12 @@
               placeholder="email"
               name="userEmail"
             />
+            <p class="error" th:errors="*{userEmail}">
+              여기에 오류메세지 적어주세요.
+            </p>
           </div>
           <div class="mb-3">
-            <label for="user-name" class="form-label">NAME</label>
+            <label for="user-name" class="form-label fw-bold">NAME</label>
             <input
               type="text"
               class="form-control"
@@ -46,6 +60,9 @@
               placeholder="name"
               name="userName"
             />
+            <p class="error" th:errors="*{userName}">
+              여기에 오류메세지 적어주세요.
+            </p>
           </div>
           <div><button class="btn btn-primary">SIGN UP</button></div>
         </div>
