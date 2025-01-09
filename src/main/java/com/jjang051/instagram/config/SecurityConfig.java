@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
@@ -34,7 +35,13 @@ public class SecurityConfig {
           .failureHandler(failureHandler())
           .permitAll()
         )
-      .csrf((csrf)->csrf.disable());
-      return httpSecurity.build();
+        .logout(
+          (auth)->auth
+          .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+          .logoutSuccessUrl("/")
+          .invalidateHttpSession(true)
+        )
+        .csrf((csrf)->csrf.disable());
+        return httpSecurity.build();
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jjang051.instagram.constant.Role;
+import com.jjang051.instagram.dto.ModifyDto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -61,6 +62,13 @@ public class Member {
 
   public void updateProfile(String profileImage ) {
     this.profileImage= profileImage;
+  }
+
+  public void updateInfo(ModifyDto modifyDto) {
+    this.userEmail = modifyDto.getUserEmail();
+    this.userName = modifyDto.getUserName();
+    this.tel = modifyDto.getTel();
+    this.description = modifyDto.getDescription();
   }
 
   @Builder

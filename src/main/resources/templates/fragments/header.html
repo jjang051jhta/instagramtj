@@ -34,7 +34,11 @@
           href="/member/info"
           th:href="@{/member/info}"
           class="btn btn-outline-primary"
+          th:text="${#authentication.principal.loggedMember.userName}"
           >장성호</a
+        >
+        <a href="" th:href="@{/member/logout}" class="btn btn-outline-primary"
+          >LOGOUT</a
         >
       </div>
     </div>

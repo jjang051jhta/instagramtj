@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jjang051.instagram.dto.CustomUserDetails;
 import com.jjang051.instagram.dto.JoinDto;
 import com.jjang051.instagram.dto.LoginDto;
+import com.jjang051.instagram.dto.ModifyDto;
 import com.jjang051.instagram.entity.Member;
 import com.jjang051.instagram.service.IMemberService;
 import com.jjang051.instagram.service.MemberService;
@@ -97,5 +98,19 @@ public class MemberController {
         return prefix+"/info";
     }
     
+
+    @GetMapping("/modify")
+    public String modify(Model model) {
+        model.addAttribute("modifyDto", new ModifyDto());
+        return prefix+"/modify";
+    }
+    @PostMapping("/modify")
+    public String modify(@ModelAttribute ModifyDto modifyDto) {
+        Member modifiedMember = memberService.modifyMember(modifyDto);
+        if(modifiedMember!=null) {
+            return "redirect:/";    
+        }
+        return "redirect:/member/info";
+    }
 }
 
