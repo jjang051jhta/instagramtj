@@ -37,9 +37,9 @@
           </div>
 
           <div th:if="${#fields.hasGlobalErrors()}">
-            <!-- <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"> -->
-            인증 예외 메시지
-            <!-- </p> -->
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">
+              인증 예외 메시지
+            </p>
           </div>
           <div><button class="btn btn-primary">LOGIN</button></div>
         </div>

@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/member")
@@ -86,5 +88,11 @@ public class MemberController {
 		// 4. 검증 문제가 없으면 스프링 시큐리티의 loginProcessUrl로 forward
         return "forward:/member/login-process";
     }
+
+    @GetMapping("/info")
+    public String info() {
+        return prefix+"/info";
+    }
+    
 }
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head th:replace="~{fragments/head :: myHead('instagram::info') }"></head>
+  <body>
+    <header th:replace="~{fragments/header}"></header>
+    <main class="container">
+      <h2 class="my-5">INFO</h2>
+      <div class="info-header">
+        <div class="profile">
+          <img
+            src="/images/user.png"
+            th:src="@{/images/common/user.png}"
+            alt=""
+          />
+        </div>
+        <form
+          method="post"
+          action=""
+          enctype="multipart/form-data"
+          style="display: none"
+        >
+          <input type="file" name="profile" id="profile" />
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
