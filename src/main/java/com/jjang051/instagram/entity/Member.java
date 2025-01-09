@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jjang051.instagram.constant.Role;
 
 import jakarta.persistence.Entity;
@@ -35,6 +36,7 @@ public class Member {
 
   private String userId;
 
+  @JsonIgnore
   private String password;
 
   private String userEmail;

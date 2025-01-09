@@ -2,6 +2,7 @@ package com.jjang051.instagram.controller;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jjang051.instagram.dto.CustomUserDetails;
 import com.jjang051.instagram.dto.JoinDto;
 import com.jjang051.instagram.dto.LoginDto;
 import com.jjang051.instagram.entity.Member;
@@ -90,7 +92,8 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public String info() {
+    public String info(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        model.addAttribute("memberInfo", customUserDetails);
         return prefix+"/info";
     }
     

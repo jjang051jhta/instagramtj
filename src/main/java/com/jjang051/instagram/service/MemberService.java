@@ -55,7 +55,7 @@ public class MemberService implements IMemberService {
       Optional<Member> optionalMember = memberRepository.findByUserId(userId);
       if(optionalMember.isPresent()) {
         Member findedMember = optionalMember.get();
-        findedMember.updateProfile(imageFilePath.toString());
+        findedMember.updateProfile("/upload/"+imageFileName);
         return findedMember;
       }
 

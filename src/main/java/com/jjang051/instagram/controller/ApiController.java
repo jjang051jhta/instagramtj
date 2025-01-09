@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jjang051.instagram.entity.Member;
 import com.jjang051.instagram.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,15 @@ public class ApiController {
   @PutMapping("/member/{id}/profile")
   public Map<String,Object> profileChange(@PathVariable String id, MultipartFile profileImage) {
     log.info("profileImage==={}",profileImage);
-    memberService.changeProfile(id,profileImage);
+    Member changedMember = memberService.changeProfile(id,profileImage);
     Map<String,Object> resultMap = new HashMap<>();
-    resultMap.put("isChangeProfile", true);
+    if(changedMember!=null) {
+      resultMap.put("isChangeProfile", true);
+      resultMap.put("memberInfo",changedMember);
+    }else {
+      resultMap.put("isChangeProfile", false);
+      resultMap.put("memberInfo",null);
+    }
     return resultMap;
   }
 }

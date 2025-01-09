@@ -8,9 +8,19 @@
       <div class="info-header">
         <div id="profile-img">
           <img
+            th:if="${memberInfo.loggedMember.profileImage != null}"
+            src="/images/user.png"
+            th:src="@{${memberInfo.loggedMember.profileImage}}"
+            alt=""
+            id="profile"
+          />
+
+          <img
+            th:if="${memberInfo.loggedMember.profileImage == null}"
             src="/images/user.png"
             th:src="@{/images/common/user.png}"
             alt=""
+            id="profile"
           />
         </div>
         <form
@@ -24,7 +34,8 @@
         </form>
       </div>
     </main>
-    <script>
+    <script th:inline="javascript">
+      const loggedId = /*[[${memberInfo.loggedMember.userId}]]*/ "jjang051";
       const profileImg = document.querySelector("#profile-img");
       const profileInput = document.querySelector("#profile-input");
       profileImg.addEventListener("click", () => {
@@ -43,14 +54,15 @@
         const formData = new FormData(profileForm);
         formData.append("profileImage", profileInput.files[0]);
         console.log(formData);
-        fetch("/api/member/jjang051/profile", {
+        fetch("/api/member/" + loggedId + "/profile", {
           method: "put",
           headers: {},
           body: formData,
         })
           .then((response) => response.json())
           .then((json) => {
-            console.log(json);
+            const profile = document.querySelector("#profile");
+            profile.setAttribute("src", json.memberInfo.profileImage);
           });
       });
     </script>
