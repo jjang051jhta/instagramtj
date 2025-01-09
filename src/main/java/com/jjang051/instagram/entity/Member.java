@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jjang051.instagram.constant.Role;
 
@@ -55,6 +56,10 @@ public class Member {
   @LastModifiedDate
   private LocalDateTime modifyDate;
 
+
+  public void updateProfile(String profileImage ) {
+    this.profileImage= profileImage;
+  }
 
   @Builder
   public Member(String userId, String password, String userEmail, String userName, Role role) {

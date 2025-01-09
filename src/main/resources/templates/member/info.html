@@ -6,7 +6,7 @@
     <main class="container">
       <h2 class="my-5">INFO</h2>
       <div class="info-header">
-        <div class="profile">
+        <div id="profile-img">
           <img
             src="/images/user.png"
             th:src="@{/images/common/user.png}"
@@ -18,10 +18,41 @@
           action=""
           enctype="multipart/form-data"
           style="display: none"
+          id="profile-form"
         >
-          <input type="file" name="profile" id="profile" />
+          <input type="file" name="profileImage" id="profile-input" />
         </form>
       </div>
     </main>
+    <script>
+      const profileImg = document.querySelector("#profile-img");
+      const profileInput = document.querySelector("#profile-input");
+      profileImg.addEventListener("click", () => {
+        //trigger
+        profileInput.click();
+      });
+      profileInput.addEventListener("change", (e) => {
+        //console.log(e);
+        //console.log(e.target.files);
+        const file = e.target.files[0];
+        if (!file.type.match("image.*")) {
+          alert("이미지 파일만 가능합니다.");
+          return false;
+        }
+        const profileForm = document.querySelector("#profile-form");
+        const formData = new FormData(profileForm);
+        formData.append("profileImage", profileInput.files[0]);
+        console.log(formData);
+        fetch("/api/member/jjang051/profile", {
+          method: "put",
+          headers: {},
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json);
+          });
+      });
+    </script>
   </body>
 </html>
