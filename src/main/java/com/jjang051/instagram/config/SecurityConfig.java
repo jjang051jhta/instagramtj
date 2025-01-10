@@ -3,14 +3,22 @@ package com.jjang051.instagram.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.jjang051.instagram.service.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+  private final OAuth2DetailsService oAuth2DetailsService;
   
   @Bean
   public AuthenticationFailureHandler failureHandler(){
@@ -42,6 +50,12 @@ public class SecurityConfig {
           .invalidateHttpSession(true)
         )
         .csrf((csrf)->csrf.disable());
-        return httpSecurity.build();
+    httpSecurity.oauth2Login(
+      (auth)->auth
+      .loginPage("/member/login")
+      .defaultSuccessUrl("/",true)
+      .userInfoEndpoint(userInfo->userInfo.userService(oAuth2DetailsService))
+    );
+    return httpSecurity.build();
   }
 }

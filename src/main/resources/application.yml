@@ -3,9 +3,9 @@ server:
 spring:
   application:
     name: instagram
-  # profiles:
-  #   include:
-  #     - oauth
+  profiles:
+    include:
+      - oauth
 
   output:
     ansi:

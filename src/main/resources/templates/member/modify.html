@@ -96,7 +96,7 @@
               placeholder="010-0000-0000"
               name="description"
               value="장성호"
-              th:value="${#authentication.principal.loggedMember.description}"
+              th:text="${#authentication.principal.loggedMember.description}"
             >
             </textarea>
             <p class="error" th:errors="*{description}">

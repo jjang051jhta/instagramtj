@@ -3,9 +3,11 @@ package com.jjang051.instagram.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.jjang051.instagram.entity.Member;
 
@@ -13,12 +15,24 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @ToString
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
-  private final Member loggedMember;
+  private Member loggedMember;
+
+  private Map<String,Object> attributes;
+
+  public CustomUserDetails(Member loggedMember) {
+    this.loggedMember=loggedMember;
+  }
+
+  public CustomUserDetails(Member loggedMember,Map<String,Object> attributes) {
+    this.loggedMember=loggedMember;
+    this.attributes = attributes;
+  }
+  
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,5 +49,16 @@ public class CustomUserDetails implements UserDetails {
   @Override
   public String getUsername() {
     return loggedMember.getUserId();
+  }
+
+  @Override
+  public String getName() {
+    return (String)attributes.get("name");
+  }
+
+
+  @Override
+  public Map<String,Object> getAttributes() {
+    return attributes;
   }
 }
