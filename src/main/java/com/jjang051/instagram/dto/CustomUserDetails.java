@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
-  private Member loggedMember;
+  private final Member loggedMember;
 
   private Map<String,Object> attributes;
 

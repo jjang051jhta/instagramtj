@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head th:replace="~{fragments/head :: myHead('instagram::login') }"></head>
+  <body>
+    <header th:replace="~{fragments/header}"></header>
+    <main class="container">
+      <h2 class="my-5">STORY UPLOAD</h2>
+      <form
+        action="/image/upload"
+        th:action="@{/image/upload}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <div class="mb-3">
+            <label for="user-id" class="form-label fw-bold">STORY UPLOAD</label>
+            <input
+              type="file"
+              class="form-control"
+              id="file"
+              placeholder="file"
+              name="file"
+            />
+          </div>
+          <div class="mb-3">
+            <img
+              src="/images/common/logo.svg"
+              th:src="@{/images/common/logo.svg}"
+              id="preview"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="caption" class="form-label fw-bold">CAPTION</label>
+            <input
+              type="text"
+              class="form-control"
+              id="caption"
+              placeholder="caption"
+              name="caption"
+            />
+          </div>
+
+          <div class="mb-3">
+            <button class="btn btn-primary w-100">UPLOAD</button>
+          </div>
+        </div>
+        <div>
+          <img src="/images/member/singup-image.jpg" alt="" />
+        </div>
+      </form>
+    </main>
+    <script>
+      const file = document.querySelector("#file");
+      const preview = document.querySelector("#preview");
+
+      file.addEventListener("change", (e) => {
+        const selectedFile = e.target.files[0];
+        if (!selectedFile.type.match("image")) {
+          alert("이미지 파일만 가능합니다.");
+          return false;
+        }
+        const fileReader = new FileReader();
+        fileReader.onload = (e) => {
+          preview.setAttribute("src", e.target.result);
+        };
+        fileReader.readAsDataURL(selectedFile);
+      });
+    </script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
 package com.jjang051.instagram.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,9 +16,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -52,6 +55,12 @@ public class Member {
   private Role role;
 
   private String profileImage;
+
+
+  // table에 컬럼은 만들어지지 않는다. 연관관계의 주인은 image이다. 
+  @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+  private List<Image> imageList;
+
 
   @CreatedDate
   private LocalDateTime regDate;

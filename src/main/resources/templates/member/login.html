@@ -41,9 +41,11 @@
               인증 예외 메시지
             </p>
           </div>
-          <div class="mb-3"><button class="btn btn-primary">LOGIN</button></div>
+          <div class="mb-3">
+            <button class="btn btn-primary w-100">LOGIN</button>
+          </div>
           <div class="mb-3 row">
-            <div class="col-4">
+            <div class="col-3">
               <a
                 href=""
                 th:href="@{/oauth2/authorization/google}"
@@ -51,7 +53,7 @@
                 >구글 로그인</a
               >
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <a
                 href=""
                 th:href="@{/oauth2/authorization/kakao}"
@@ -59,10 +61,10 @@
                 >카카오 로그인</a
               >
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <a href="" class="btn btn-primary w-100">네이버 로그인</a>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <a href="" class="btn btn-primary w-100">깃허브 로그인</a>
             </div>
           </div>
