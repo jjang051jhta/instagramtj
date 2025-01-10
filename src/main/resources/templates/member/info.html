@@ -8,15 +8,15 @@
       <div class="info-header">
         <div id="profile-img">
           <img
-            th:if="${memberInfo.loggedMember.profileImage != null}"
+            th:if="${memberInfoDto.member.profileImage != null}"
             src="/images/user.png"
-            th:src="@{${memberInfo.loggedMember.profileImage}}"
+            th:src="@{${memberInfoDto.member.profileImage}}"
             alt=""
             id="profile"
           />
 
           <img
-            th:if="${memberInfo.loggedMember.profileImage == null}"
+            th:if="${memberInfoDto.member.profileImage == null}"
             src="/images/user.png"
             th:src="@{/images/common/user.png}"
             alt=""
@@ -41,9 +41,26 @@
           <input type="file" name="profileImage" id="profile-input" />
         </form>
       </div>
+      <div class="member-info">
+
+      </div>
+      <div class="story-list">
+        <ul>
+          <th:block th:each= "item:${memberInfoDto.member.imageList}">
+            <li>
+              <a>
+                <img src="/upload/dummy.jpg" th:src="${item.imgUrl}">
+                <div class="overlay">
+
+                </div>
+              </a>
+            </li>
+          </th:block>
+        </ul>
+      </div>
     </main>
     <script th:inline="javascript">
-      const loggedId = /*[[${memberInfo.loggedMember.userId}]]*/ "jjang051";
+      const loggedId = /*[[${memberInfoDto.member.userId}]]*/ "jjang051";
       const profileImg = document.querySelector("#profile-img");
       const profileInput = document.querySelector("#profile-input");
       profileImg.addEventListener("click", () => {

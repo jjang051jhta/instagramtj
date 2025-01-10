@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jjang051.instagram.constant.Role;
 import com.jjang051.instagram.dto.JoinDto;
+import com.jjang051.instagram.dto.MemberInfoDto;
 import com.jjang051.instagram.dto.ModifyDto;
 import com.jjang051.instagram.entity.Member;
 import com.jjang051.instagram.repository.MemberRepository;
@@ -75,5 +76,19 @@ public class MemberService implements IMemberService {
       return memberRepository.save(member);
     }
     return null;
+  }
+
+  @Override
+  public MemberInfoDto getInfo(Integer id, Integer customUserDetailsId) {
+    MemberInfoDto memberInfoDto = new MemberInfoDto();
+    Optional<Member> optionalMember = memberRepository.findById(id);
+    Member findedMember = null;
+    if(optionalMember.isPresent()) {
+      findedMember = optionalMember.get();
+      memberInfoDto.setMember(findedMember);
+      memberInfoDto.setPageOwner(id==customUserDetailsId);
+      return memberInfoDto;
+    }
+    return memberInfoDto;
   }
 }

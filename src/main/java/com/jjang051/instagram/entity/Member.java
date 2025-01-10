@@ -9,9 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jjang051.instagram.constant.Role;
 import com.jjang051.instagram.dto.ModifyDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -38,6 +40,7 @@ public class Member {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Integer id;
 
+  @Column(unique = true)
   private String userId;
 
   @JsonIgnore
@@ -59,6 +62,7 @@ public class Member {
 
   // table에 컬럼은 만들어지지 않는다. 연관관계의 주인은 image이다. 
   @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+  @JsonIgnoreProperties({"member"})
   private List<Image> imageList;
 
 

@@ -32,7 +32,7 @@
         <a href="" class="btn btn-outline-primary">POPULAR</a>
         <a
           href="/member/info"
-          th:href="@{/member/info}"
+          th:href="@{/member/info/{id}(id=${#authentication.principal.loggedMember.id})}"
           class="btn btn-outline-primary"
           th:text="${#authentication.principal.loggedMember.userName}"
           >장성호</a

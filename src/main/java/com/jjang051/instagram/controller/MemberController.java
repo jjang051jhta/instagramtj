@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jjang051.instagram.dto.CustomUserDetails;
 import com.jjang051.instagram.dto.JoinDto;
 import com.jjang051.instagram.dto.LoginDto;
+import com.jjang051.instagram.dto.MemberInfoDto;
 import com.jjang051.instagram.dto.ModifyDto;
 import com.jjang051.instagram.entity.Member;
 import com.jjang051.instagram.service.IMemberService;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -92,9 +94,10 @@ public class MemberController {
         return "forward:/member/login-process";
     }
 
-    @GetMapping("/info")
-    public String info(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        model.addAttribute("memberInfo", customUserDetails);
+    @GetMapping("/info/{id}")
+    public String info(@PathVariable int id, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        MemberInfoDto memberInfoDto = memberService.getInfo(id, customUserDetails.getLoggedMember().getId());
+        model.addAttribute("memberInfoDto", memberInfoDto);
         return prefix+"/info";
     }
     

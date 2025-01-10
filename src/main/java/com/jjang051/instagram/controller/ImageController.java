@@ -31,10 +31,10 @@ public class ImageController {
   }
 
   @PostMapping("/upload")
-  @ResponseBody
+  //@ResponseBody
   public String upload(ImageUploadDto imageUploadDto,@AuthenticationPrincipal CustomUserDetails customUserDetails) {
     log.info("imageUploadDto===={}",imageUploadDto);  
     imageService.upload(imageUploadDto,customUserDetails);
-    return prefix+"/upload";
+    return "redirect:/member/info/"+customUserDetails.getLoggedMember().getId();
   }
 }
