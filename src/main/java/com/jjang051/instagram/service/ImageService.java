@@ -46,4 +46,14 @@ public class ImageService {
     return null;
     
   }
+
+  public Image getDetail(Integer id) {
+    Optional<Image> optionalImage = imageRepository.findById(id);
+    Image findedImage = null;
+    if(optionalImage.isPresent()) {
+      findedImage = optionalImage.get();
+      return findedImage;
+    }
+    return null;
+  }
 }

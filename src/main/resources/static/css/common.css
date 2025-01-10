@@ -16,3 +16,46 @@ h1 img {
   border-radius: 80px;
   overflow: hidden;
 }
+
+.story-detail {
+  border: 1px solid #ccc;
+}
+.story-detail .header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+}
+.story-detail .user-name {
+  font-weight: bold;
+  margin-left: 20px;
+  font-size: 18px;
+}
+.story-detail .img-box {
+  border-bottom: 1px solid #ccc;
+}
+.story-detail .img-box img {
+  width: 100%;
+  vertical-align: top;
+}
+.story-detail .caption-box h3 {
+  padding: 15px;
+  font-size: 20px;
+}
+
+.story-list ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  gap: 10px;
+}
+.story-list ul li {
+  flex-basis: 33.33%;
+  aspect-ratio: 3/2;
+}
+.story-list ul li img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}

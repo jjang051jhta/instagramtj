@@ -44,16 +44,22 @@
       <div class="member-info">
 
       </div>
-      <div class="story-list">
+      <div class="story-list mt-5">
         <ul>
           <th:block th:each= "item:${memberInfoDto.member.imageList}">
             <li>
-              <a>
+              <a href="/image/detail/3" th:href="@{/image/detail/{id}(id=${item.id})}">
                 <img src="/upload/dummy.jpg" th:src="${item.imgUrl}">
                 <div class="overlay">
 
                 </div>
               </a>
+              <!-- <a href="/image/detail/3" th:href="@{|/image/detail/${item.id}|}">
+                <img src="/upload/dummy.jpg" th:src="${item.imgUrl}">
+                <div class="overlay">
+
+                </div>
+              </a> -->
             </li>
           </th:block>
         </ul>

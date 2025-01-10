@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head th:replace="~{fragments/head :: myHead('instagram::info') }"></head>
+  <body>
+    <header th:replace="~{fragments/header}"></header>
+    <main class="container">
+      <h2 class="my-5">STORY</h2>
+
+      <div class="story-detail mt-5">
+        <div class="header">
+          <img
+            src=""
+            alt=""
+            th:src="@{|${imageInfo.member.profileImage}|}"
+            id="profile"
+          />
+          <span th:text="${imageInfo.member.userName}" class="user-name"
+            >이름이 들어갑니다.</span
+          >
+        </div>
+        <div class="img-box">
+          <img src="" alt="" th:src="@{|${imageInfo.imgUrl}|}" />
+        </div>
+        <div class="caption-box">
+          <h3 th:text="${imageInfo.caption}">제목이 들어갑니다.</h3>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
