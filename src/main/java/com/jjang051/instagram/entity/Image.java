@@ -19,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
+import jakarta.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,6 +53,13 @@ public class Image {
   private List<Comment> commentList;
 
 
+  @Transient
+  private boolean likeState;
+
+  @Transient
+  private Integer likeTotal;
+
+  
   @CreatedDate
   private LocalDateTime regDate;
 
