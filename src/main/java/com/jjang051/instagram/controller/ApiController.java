@@ -67,10 +67,11 @@ public class ApiController {
   }
 
   @DeleteMapping("/comment/delete/{id}")
-  public Map<String,Object> deleteComment(@PathVariable Integer id) {
+  public Map<String,Object> deleteComment(@PathVariable("id") Integer id) {
+    log.info("id==={}",id);
       boolean isDelete = commentService.deleteComment(id);
       Map<String,Object> resultMap = new HashMap<>();
-      resultMap.put("isDelete",isDelete);
+      resultMap.put("isDelete",!isDelete);
       return resultMap;
   }
 }

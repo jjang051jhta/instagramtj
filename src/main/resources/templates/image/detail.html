@@ -42,7 +42,12 @@
                   >
                 </div>
                 <div>
-                  <button class="btn btn-danger btn-del btn-sm">삭제</button>
+                  <button
+                    class="btn btn-danger btn-del btn-sm"
+                    th:attr="data-id=${item.id}"
+                  >
+                    삭제
+                  </button>
                 </div>
               </li>
             </th:block>
@@ -110,6 +115,7 @@
         const btnDel = e.target.closest("button");
         if (btnDel.classList.contains("btn-del")) {
           const id = btnDel.dataset.id;
+          console.log(id);
           if (confirm("삭제하시겠습니까?")) {
             fetch("/api/comment/delete/" + id, {
               method: "delete",
@@ -119,6 +125,8 @@
                 console.log(json);
                 if (json.isDelete) {
                   alert("삭제되었습니다.");
+                  const parentLi = e.target.closest("li");
+                  parentLi.remove();
                 } else {
                   alert("알 수 없는 이유로 삭제되지 않았습니다.");
                 }
