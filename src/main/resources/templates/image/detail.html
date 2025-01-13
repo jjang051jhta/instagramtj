@@ -24,6 +24,16 @@
         <div class="caption-box">
           <h3 th:text="${imageInfo.caption}">제목이 들어갑니다.</h3>
         </div>
+        <div class="comment-list">댓글나오는 영역</div>
+        <div class="mt-5">
+          <div class="mb-3">
+            <label for="comment" class="form-label">댓글</label>
+            <textarea class="form-control" id="comment" rows="3"></textarea>
+            <div class="mt-3">
+              <button class="btn btn-primary" id="btn-comment">댓글달기</button>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </body>
