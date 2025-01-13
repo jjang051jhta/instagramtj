@@ -3,6 +3,7 @@ package com.jjang051.instagram.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jjang051.instagram.dto.CommentDto;
 import com.jjang051.instagram.entity.Comment;
@@ -21,6 +22,7 @@ public class CommentService {
   //private final MemberRepository MemberRepository;
   
 
+  @Transactional
   public Comment writeComment(CommentDto commentDto) {
     Optional<Image> optionalImage = imageRepository.findById(commentDto.getImageId());
     if(optionalImage.isPresent()) {
@@ -33,5 +35,11 @@ public class CommentService {
       return commentRepository.save(comment);
     }
     return null;
+  }
+
+  @Transactional
+  public boolean deleteComment(Integer id) {
+    commentRepository.deleteById(id);
+    return commentRepository.existsById(id);
   }
 }

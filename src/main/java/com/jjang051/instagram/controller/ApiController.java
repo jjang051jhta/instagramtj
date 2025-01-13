@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -47,7 +48,7 @@ public class ApiController {
     return resultMap;
   }
 
-  @PostMapping("/comment")
+  @PostMapping("/comment/write")
   public Map<String,Object> writeComment(@RequestBody CommentDto commentDto) {
       Comment comment = commentService.writeComment(commentDto);
 
@@ -62,6 +63,14 @@ public class ApiController {
         resultMap.put("commentDto",null);
       }
       //resultMap.put("commentList",commentList);
+      return resultMap;
+  }
+
+  @DeleteMapping("/comment/delete/{id}")
+  public Map<String,Object> deleteComment(@PathVariable Integer id) {
+      boolean isDelete = commentService.deleteComment(id);
+      Map<String,Object> resultMap = new HashMap<>();
+      resultMap.put("isDelete",isDelete);
       return resultMap;
   }
 }
