@@ -4,7 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jjang051.instagram.dto.CommentDto;
+import com.jjang051.instagram.entity.Comment;
 import com.jjang051.instagram.entity.Member;
+import com.jjang051.instagram.service.CommentService;
 import com.jjang051.instagram.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 
 
 @RestController
@@ -24,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequiredArgsConstructor
 public class ApiController {
   private final MemberService memberService;
+  private final CommentService commentService;
 
 
   @PutMapping("/member/{id}/profile")
@@ -39,5 +45,21 @@ public class ApiController {
       resultMap.put("memberInfo",null);
     }
     return resultMap;
+  }
+
+  @PostMapping("/comment")
+  public Map<String,Object> writeComment(@RequestBody CommentDto commentDto) {
+      Comment comment = commentService.writeComment(commentDto);
+      log.info("commentDto==={}",commentDto.toString());
+      Map<String,Object> resultMap = new HashMap<>();
+      if(comment!=null) {
+        resultMap.put("isInsert",true);
+        resultMap.put("comment",comment);
+      } else {
+        resultMap.put("isInsert",false);
+        resultMap.put("comment",null);
+      }
+      //resultMap.put("commentList",commentList);
+      return resultMap;
   }
 }
