@@ -50,14 +50,16 @@ public class ApiController {
   @PostMapping("/comment")
   public Map<String,Object> writeComment(@RequestBody CommentDto commentDto) {
       Comment comment = commentService.writeComment(commentDto);
+
       log.info("commentDto==={}",commentDto.toString());
       Map<String,Object> resultMap = new HashMap<>();
       if(comment!=null) {
+        CommentDto responseCommentDto = new CommentDto(comment.getContent(), comment.getRegDate());
         resultMap.put("isInsert",true);
-        resultMap.put("comment",comment);
+        resultMap.put("commentDto",responseCommentDto);
       } else {
         resultMap.put("isInsert",false);
-        resultMap.put("comment",null);
+        resultMap.put("commentDto",null);
       }
       //resultMap.put("commentList",commentList);
       return resultMap;

@@ -24,7 +24,28 @@
         <div class="caption-box">
           <h3 th:text="${imageInfo.caption}">제목이 들어갑니다.</h3>
         </div>
-        <div class="comment-list mt-5 p-3">댓글나오는 영역</div>
+        <div class="comment-list-box mt-5 p-3">
+          <!--beforebegin-->
+          <ul id="comment-list">
+            <!--afterbegin-->
+            <th:block th:each="item:${imageInfo.commentList}">
+              <li class="d-flex justify-content-between mt-1">
+                <div>
+                  <span th:text="${item.content}">댓글이 달렸습니다.</span
+                  ><span
+                    th:text="${#temporals.format(item.regDate,'yyyy/MM/dd HH:mm:ss')}"
+                    >2025/01/12 13:44:34</span
+                  >
+                </div>
+                <div>
+                  <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
+              </li>
+            </th:block>
+            <!--beforeend-->
+          </ul>
+          <!--afterend-->
+        </div>
         <div class="mt-5 p-3">
           <label for="comment" class="form-label">댓글</label>
           <textarea class="form-control" id="comment" rows="3"></textarea>
@@ -37,6 +58,7 @@
     <script th:inline="javascript">
       const btnComment = document.querySelector("#btn-comment");
       const comment = document.querySelector("#comment");
+      const commentList = document.querySelector("#comment-list");
       const imageId = /*[[${imageInfo.id}]]*/ 0;
       btnComment.addEventListener("click", (e) => {
         const sendData = {
@@ -53,7 +75,30 @@
         })
           .then((response) => response.json())
           .then((json) => {
-            console.log(json);
+            if (json.isInsert) {
+              // commentList.innerHTML += `<li class="d-flex justify-content-between">
+              //   <div>
+              //     <span>${json.comment.content}</span><span>${json.comment.regDate}</span>
+              //   </div>
+              //   <div>
+              //     <button class="btn btn-danger btn-sm">삭제</button>
+              //   </div>
+              // </li>`;
+              // const formattedDate = dayjs(json.comment.regDate).format(
+              //   "YYYY/MM/DD HH:mm:ss"
+              // );
+              commentList.insertAdjacentHTML(
+                "beforeend",
+                `<li class="d-flex justify-content-between">
+                <div>
+                  <span>${json.commentDto.content}</span><span>${json.commentDto.regDate}</span>
+                </div>
+                <div>
+                  <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
+              </li>`
+              );
+            }
           });
       });
     </script>

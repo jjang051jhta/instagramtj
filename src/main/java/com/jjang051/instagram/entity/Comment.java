@@ -46,6 +46,7 @@ public class Comment {
 
   @ManyToOne
   @JoinColumn(name = "imageId")
+  @JsonIgnoreProperties({"commentList","member","imageUrl"})
   private Image image;  // 이미지 하나에 여러개의 코켄트가 달릴 수 있다.
 
   @CreatedDate
