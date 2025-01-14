@@ -143,13 +143,26 @@
       //좋아요 클릭
       const btnLike = document.querySelector(".icon");
       btnLike.addEventListener("click", () => {
-        fetch("/api/image/" + imageId + "/like", {
-          method: "post",
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            console.log(json);
-          });
+        const likeState = btnLike.dataset.state;
+        if (likeState === "like") {
+          fetch("/api/image/" + imageId + "/like", {
+            method: "post",
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              console.log(json);
+              btnLike.dataset.state = "hate";
+            });
+        } else {
+          fetch("/api/image/" + imageId + "/hate", {
+            method: "delete",
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              console.log(json);
+              btnLike.dataset.state = "like";
+            });
+        }
       });
     </script>
   </body>

@@ -19,4 +19,9 @@ public class LikeService {
   public int like(int imageId,String userId) {
     return likeRepository.like(imageId, userId);
   }
+
+  @Transactional
+  public int hate(int imageId,String userId) {
+    return likeRepository.hate(imageId, userId);
+  }
 }

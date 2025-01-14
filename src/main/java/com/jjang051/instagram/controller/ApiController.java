@@ -91,4 +91,16 @@ public class ApiController {
     }
     return resultMap;
   }
+
+  @DeleteMapping("/image/{imageId}/hate")
+  public Map<String,Object> hate(@PathVariable Integer imageId, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    int result = likeService.hate(imageId,customUserDetails.getLoggedMember().getUserId());
+    Map<String,Object> resultMap = new HashMap<>();
+    if(result>0) {
+      resultMap.put("isLikeDelete",true);
+    } else {
+      resultMap.put("isLikeDelete",false);
+    }
+    return resultMap;
+  }
 }

@@ -16,5 +16,7 @@ public interface LikeRepository extends JpaRepository<Like,Integer> {
                  "(TABLE_LIKE_SEQ.nextval,:imageId,:userId,sysdate)",nativeQuery = true)
   int like(@Param("imageId") int imageId, @Param("userId") String userId);
 
-
+  @Modifying
+  @Query(value = "DELETE TABLE_LIKE WHERE imageId= :imageId and userId = :userId",nativeQuery = true)
+  int hate(@Param("imageId") int imageId, @Param("userId") String userId);
 }
