@@ -1,5 +1,7 @@
 package com.jjang051.instagram.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,5 +56,12 @@ public class ImageController {
                           .build();
       model.addAttribute("imageInfo", imageDto);
       return prefix+"/detail";
+  }
+
+  @GetMapping("/story")
+  public String story(Model model) {
+    List<Image> storyList = null;//imageService.story();
+    model.addAttribute("storyList", storyList);
+    return prefix+"/story";
   }
 }

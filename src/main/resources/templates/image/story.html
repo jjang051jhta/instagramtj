@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head th:replace="~{fragments/head :: myHead('instagram::info') }"></head>
+  <body>
+    <header th:replace="~{fragments/header}"></header>
+    <main class="container">
+      <h2 class="my-5">STORY</h2>
+      <div class="story-detail mt-5">
+        <div class="header">
+          <img
+            src=""
+            alt=""
+            th:src="@{|${imageInfo.member.profileImage}|}"
+            id="profile"
+          />
+          <span th:text="${imageInfo.member.userName}" class="user-name"
+            >이름이 들어갑니다.</span
+          >
+        </div>
+        <div class="img-box">
+          <img src="" alt="" th:src="@{|${imageInfo.imgUrl}|}" />
+        </div>
+        <div class="caption-box">
+          <h3 th:text="${imageInfo.caption}">제목이 들어갑니다.</h3>
+        </div>
+        <div class="like-box p-3">
+          <span class="icon" data-state="like">
+            <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
+          </span>
+          <span th:text="${imageInfo.likeTotal}">3</span>
+        </div>
+        <div class="comment-list-box mt-5 p-3">
+          <!--beforebegin-->
+          <ul id="comment-list">
+            <!--afterbegin-->
+            <th:block th:each="item:${imageInfo.commentList}">
+              <li
+                class="d-flex justify-content-between mt-1"
+                data-id="${item.id}"
+                th:attr="data-id=${item.id}"
+              >
+                <div>
+                  <span th:text="${item.content}">댓글이 달렸습니다.</span
+                  ><span
+                    th:text="${#temporals.format(item.regDate,'yyyy/MM/dd HH:mm:ss')}"
+                    >2025/01/12 13:44:34</span
+                  >
+                </div>
+                <div>
+                  <button
+                    class="btn btn-danger btn-del btn-sm"
+                    th:attr="data-id=${item.id}"
+                  >
+                    삭제
+                  </button>
+                </div>
+              </li>
+            </th:block>
+            <!--beforeend-->
+          </ul>
+          <!--afterend-->
+        </div>
+        <div class="mt-5 p-3">
+          <label for="comment" class="form-label">댓글</label>
+          <textarea class="form-control" id="comment" rows="3"></textarea>
+          <div class="mt-3">
+            <button class="btn btn-primary" id="btn-comment">댓글달기</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script th:inline="javascript">
+      const btnComment = document.querySelector("#btn-comment");
+      const comment = document.querySelector("#comment");
+      const commentList = document.querySelector("#comment-list");
+      const imageId = /*[[${imageInfo.id}]]*/ 0;
+      btnComment.addEventListener("click", (e) => {
+        const sendData = {
+          content: comment.value,
+          imageId: Number(imageId),
+        };
+        console.log(sendData);
+        fetch("/api/comment/write", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sendData),
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            if (json.isInsert) {
+              // commentList.innerHTML += `<li class="d-flex justify-content-between">
+              //   <div>
+              //     <span>${json.comment.content}</span><span>${json.comment.regDate}</span>
+              //   </div>
+              //   <div>
+              //     <button class="btn btn-danger btn-sm">삭제</button>
+              //   </div>
+              // </li>`;
+              // const formattedDate = dayjs(json.comment.regDate).format(
+              //   "YYYY/MM/DD HH:mm:ss"
+              // );
+              commentList.insertAdjacentHTML(
+                "beforeend",
+                `<li class="d-flex justify-content-between mt-1">
+                <div>
+                  <span>${json.commentDto.content}</span><span>${json.commentDto.regDate}</span>
+                </div>
+                <div>
+                  <button class="btn btn-danger btn-sm">삭제</button>
+                </div>
+              </li>`
+              );
+            }
+          });
+      });
+
+      commentList.addEventListener("click", (e) => {
+        const btnDel = e.target.closest("button");
+        if (btnDel.classList.contains("btn-del")) {
+          const id = btnDel.dataset.id;
+          console.log(id);
+          if (confirm("삭제하시겠습니까?")) {
+            fetch("/api/comment/delete/" + id, {
+              method: "delete",
+            })
+              .then((response) => response.json())
+              .then((json) => {
+                console.log(json);
+                if (json.isDelete) {
+                  alert("삭제되었습니다.");
+                  const parentLi = e.target.closest("li");
+                  parentLi.remove();
+                } else {
+                  alert("알 수 없는 이유로 삭제되지 않았습니다.");
+                }
+              });
+          }
+        }
+      });
+      //좋아요 클릭
+      const btnLike = document.querySelector(".icon");
+      btnLike.addEventListener("click", () => {
+        const likeState = btnLike.dataset.state;
+        if (likeState === "like") {
+          fetch("/api/image/" + imageId + "/like", {
+            method: "post",
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              console.log(json);
+              btnLike.dataset.state = "hate";
+            });
+        } else {
+          fetch("/api/image/" + imageId + "/like", {
+            method: "delete",
+          })
+            .then((response) => response.json())
+            .then((json) => {
+              console.log(json);
+              btnLike.dataset.state = "like";
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

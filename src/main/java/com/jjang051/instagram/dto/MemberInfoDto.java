@@ -18,6 +18,11 @@ import lombok.ToString;
 public class MemberInfoDto {
   private boolean pageOwner;
   private Member member;
+  private int subscribeCount;
+  private boolean subscribeState;
+  private int imageTotal;
+  
+  
   //구독자수
   //몇개의 이미지를 업로드 했는지
 }
