@@ -60,7 +60,7 @@ public class ImageController {
 
   @GetMapping("/story")
   public String story(Model model) {
-    List<Image> storyList = null;//imageService.story();
+    List<Image> storyList = imageService.story();
     model.addAttribute("storyList", storyList);
     return prefix+"/story";
   }
