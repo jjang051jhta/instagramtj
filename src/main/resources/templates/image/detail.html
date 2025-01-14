@@ -104,7 +104,7 @@
               // );
               commentList.insertAdjacentHTML(
                 "beforeend",
-                `<li class="d-flex justify-content-between">
+                `<li class="d-flex justify-content-between mt-1">
                 <div>
                   <span>${json.commentDto.content}</span><span>${json.commentDto.regDate}</span>
                 </div>
@@ -139,6 +139,17 @@
               });
           }
         }
+      });
+      //좋아요 클릭
+      const btnLike = document.querySelector(".icon");
+      btnLike.addEventListener("click", () => {
+        fetch("/api/image/" + imageId + "/like", {
+          method: "post",
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json);
+          });
       });
     </script>
   </body>

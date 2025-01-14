@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jjang051.instagram.dto.CommentDto;
+import com.jjang051.instagram.dto.CustomUserDetails;
 import com.jjang051.instagram.entity.Comment;
 import com.jjang051.instagram.entity.Member;
 import com.jjang051.instagram.service.CommentService;
+import com.jjang051.instagram.service.LikeService;
 import com.jjang051.instagram.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +34,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ApiController {
   private final MemberService memberService;
   private final CommentService commentService;
+  private final LikeService likeService;
+  
 
 
   @PutMapping("/member/{id}/profile")
@@ -73,5 +78,17 @@ public class ApiController {
       Map<String,Object> resultMap = new HashMap<>();
       resultMap.put("isDelete",!isDelete);
       return resultMap;
+  }
+
+  @PostMapping("/image/{imageId}/like")
+  public Map<String,Object> like(@PathVariable Integer imageId, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    int result = likeService.like(imageId,customUserDetails.getLoggedMember().getUserId());
+    Map<String,Object> resultMap = new HashMap<>();
+    if(result>0) {
+      resultMap.put("isLikeInsert",true);
+    } else {
+      resultMap.put("isLikeInsert",false);
+    }
+    return resultMap;
   }
 }
