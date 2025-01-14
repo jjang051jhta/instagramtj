@@ -10,15 +10,17 @@
           <li>
             <div class="story-detail mt-5">
               <div class="header">
-                <img
-                  src=""
-                  alt=""
-                  th:src="@{|${item.member.profileImage}|}"
-                  id="profile"
-                />
-                <span th:text="${item.member.userName}" class="user-name"
-                  >이름이 들어갑니다.</span
-                >
+                <a href="" th:href="@{/member/info/{id}(id=${item.member.id})}">
+                  <img
+                    src=""
+                    alt=""
+                    th:src="@{|${item.member.profileImage}|}"
+                    id="profile"
+                  />
+                  <span th:text="${item.member.userName}" class="user-name"
+                    >이름이 들어갑니다.</span
+                  >
+                </a>
               </div>
               <div class="img-box">
                 <img src="" alt="" th:src="@{|${item.imgUrl}|}" />
