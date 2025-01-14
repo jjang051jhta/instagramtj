@@ -28,7 +28,7 @@
           <span class="icon" data-state="like">
             <i class="bi bi-balloon-heart-fill text-danger fs-3"></i>
           </span>
-          <span>3</span>
+          <span th:text="${imageInfo.likeTotal}">3</span>
         </div>
         <div class="comment-list-box mt-5 p-3">
           <!--beforebegin-->
@@ -154,7 +154,7 @@
               btnLike.dataset.state = "hate";
             });
         } else {
-          fetch("/api/image/" + imageId + "/hate", {
+          fetch("/api/image/" + imageId + "/like", {
             method: "delete",
           })
             .then((response) => response.json())

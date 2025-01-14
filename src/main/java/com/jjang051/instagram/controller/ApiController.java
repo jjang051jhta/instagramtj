@@ -82,6 +82,7 @@ public class ApiController {
 
   @PostMapping("/image/{imageId}/like")
   public Map<String,Object> like(@PathVariable Integer imageId, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    log.info("PostMapping");
     int result = likeService.like(imageId,customUserDetails.getLoggedMember().getUserId());
     Map<String,Object> resultMap = new HashMap<>();
     if(result>0) {
@@ -92,8 +93,9 @@ public class ApiController {
     return resultMap;
   }
 
-  @DeleteMapping("/image/{imageId}/hate")
+  @DeleteMapping("/image/{imageId}/like")
   public Map<String,Object> hate(@PathVariable Integer imageId, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    log.info("delete");
     int result = likeService.hate(imageId,customUserDetails.getLoggedMember().getUserId());
     Map<String,Object> resultMap = new HashMap<>();
     if(result>0) {
